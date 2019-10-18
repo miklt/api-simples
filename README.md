@@ -9,4 +9,11 @@ Implementações de uma api de login
 
 ### baseado em: 
 https://lobotuerto.com/blog/building-a-json-api-in-elixir-with-phoenix/
+### alterações:
+mix phx.new . --app simple_api --module SimpleApi --no-html --no-webpack --binary-id
+Cria um projeto na mesma pasta. O módulo principal é SimpleApi e simple_api é a referência para arquivos dentro do projeto.
+
+
+
+
 
