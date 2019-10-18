@@ -6,9 +6,9 @@ defmodule SimpleApi.AuthTest do
   describe "users" do
     alias SimpleApi.Auth.User
 
-    @valid_attrs %{email: "some email", is_active: true}
-    @update_attrs %{email: "some updated email", is_active: false}
-    @invalid_attrs %{email: nil, is_active: nil}
+    @valid_attrs %{email: "some email", is_active: true, password: "some password"}
+    @update_attrs %{email: "some updated email", is_active: false, password: "Some updated password"}
+    @invalid_attrs %{email: nil, is_active: nil, password: nil}
 
     def user_fixture(attrs \\ %{}) do
       {:ok, user} =
@@ -16,7 +16,8 @@ defmodule SimpleApi.AuthTest do
         |> Enum.into(@valid_attrs)
         |> Auth.create_user()
 
-      user
+      %{user | password: nil}
+      
     end
 
     test "list_users/0 returns all users" do
@@ -33,6 +34,7 @@ defmodule SimpleApi.AuthTest do
       assert {:ok, %User{} = user} = Auth.create_user(@valid_attrs)
       assert user.email == "some email"
       assert user.is_active == true
+      assert Bcrypt.verify_pass("some password", user.password_hash)
     end
 
     test "create_user/1 with invalid data returns error changeset" do
